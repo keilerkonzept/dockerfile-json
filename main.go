@@ -102,13 +102,13 @@ func main() {
 	}
 
 	type outStage struct {
-		Name       string
-		BaseName   string
-		SourceCode string
-		Platform   string
-		IsDerived  bool
-		IsScratch  bool
-		Commands   []outCommand
+		Name        string
+		BaseName    string
+		SourceCode  string
+		Platform    string
+		FromStage   bool
+		FromScratch bool
+		Commands    []outCommand
 	}
 
 	type outDockerfile struct {
@@ -129,9 +129,9 @@ func main() {
 			}
 			switch {
 			case seenStageNames[stage.BaseName]:
-				outStage.IsDerived = true
+				outStage.FromStage = true
 			case stage.BaseName == "scratch":
-				outStage.IsScratch = true
+				outStage.FromScratch = true
 			}
 			if stage.Name != "" {
 				seenStageNames[stage.Name] = true

@@ -1,4 +1,4 @@
-VERSION = 0.2.7
+VERSION = 0.3.0
 
 APP      := dockerfile-json
 PACKAGES := $(shell go list -f {{.Dir}} ./...)

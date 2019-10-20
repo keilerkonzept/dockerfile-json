@@ -69,8 +69,8 @@ $ dockerfile-json Dockerfile | jq .
       "BaseName": "alpine:3.10",
       "SourceCode": "FROM alpine:${ALPINE_TAG} AS build",
       "Platform": "",
-      "IsDerived": false,
-      "IsScratch": false,
+      "FromStage": false,
+      "FromScratch": false,
       "Commands": [
         {
           "Name": "run",
@@ -88,8 +88,8 @@ $ dockerfile-json Dockerfile | jq .
       "BaseName": "scratch",
       "SourceCode": "FROM scratch",
       "Platform": "",
-      "IsDerived": false,
-      "IsScratch": true,
+      "FromStage": false,
+      "FromScratch": true,
       "Commands": [
         {
           "Name": "copy",
@@ -160,7 +160,7 @@ FROM ${APP_BASE}
 
 ```sh
 $ dockerfile-json Dockerfile |
-    jq '.Stages[] | select((.IsDerived or .IsScratch)|not) | .BaseName'
+    jq '.Stages[] | select((.FromStage or .FromScratch)|not) | .BaseName'
 ```
 ```json
 "alpine:3.10"
@@ -170,7 +170,7 @@ $ dockerfile-json Dockerfile |
 
 ```sh
 $ dockerfile-json --build-arg ALPINE_TAG=hello-world Dockerfile |
-    jq '.Stages[] | select((.IsDerived or .IsScratch)|not) | .BaseName'
+    jq '.Stages[] | select((.FromStage or .FromScratch)|not) | .BaseName'
 ```
 ```json
 "alpine:hello-world"
