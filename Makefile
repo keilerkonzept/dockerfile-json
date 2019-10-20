@@ -1,4 +1,4 @@
-VERSION = 0.2.0
+VERSION = 0.2.1
 
 APP      := dockerfile-json
 PACKAGES := $(shell go list -f {{.Dir}} ./...)
@@ -12,6 +12,7 @@ clean:
 	rm -rf release/
 
 release: README.md zip
+	git add README.template.md
 	git add README.md
 	git add Makefile
 	git commit -am "Release $(VERSION)" || true
