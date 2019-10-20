@@ -21,10 +21,10 @@ Prints Dockerfiles as JSON to stdout, optionally evaluates build args. Plays wel
 Using go get:
 
 ```bash
-go get -u github.com/sgreben/${APP}
+go get -u github.com/keilerkonzept/${APP}
 ```
 
-Or [download the binary for your platform](https://github.com/sgreben/${APP}/releases/latest) from the releases page.
+Or [download the binary for your platform](https://github.com/keilerkonzept/${APP}/releases/latest) from the releases page.
 
 ## Usage
 
