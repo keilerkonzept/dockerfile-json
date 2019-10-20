@@ -133,6 +133,8 @@ FROM openjdk:jre-alpine
 
 ```sh
 $ dockerfile-json Dockerfile | jq '.Stages[] | .Name | select(. != "")'
+```
+```json
 "build"
 "test"
 ```
@@ -159,6 +161,8 @@ FROM ${APP_BASE}
 ```sh
 $ dockerfile-json Dockerfile |
     jq '.Stages[] | select((.IsDerived or .IsScratch)|not) | .BaseName'
+```
+```json
 "alpine:3.10"
 ```
 
@@ -167,6 +171,8 @@ $ dockerfile-json Dockerfile |
 ```sh
 $ dockerfile-json --build-arg ALPINE_TAG=hello-world Dockerfile |
     jq '.Stages[] | select((.IsDerived or .IsScratch)|not) | .BaseName'
+```
+```json
 "alpine:hello-world"
 ```
 
@@ -174,6 +180,8 @@ $ dockerfile-json --build-arg ALPINE_TAG=hello-world Dockerfile |
 
 ```sh
 $  dockerfile-json Dockerfile | jq '.Stages[] | .BaseName'
+```
+```json
 "alpine:3.10"
 "build"
 "scratch"
@@ -182,8 +190,9 @@ $  dockerfile-json Dockerfile | jq '.Stages[] | .BaseName'
 #### Ignore build args, include all base names
 
 ```sh
-$ dockerfile-json --expand-build-args=false Dockerfile |
-    jq '.Stages[] | .BaseName'
+$ dockerfile-json --expand-build-args=false Dockerfile | jq '.Stages[] | .BaseName'
+```
+```json
 "alpine:${ALPINE_TAG}"
 "build"
 "${APP_BASE}"
