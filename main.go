@@ -47,11 +47,13 @@ func init() {
 func buildArgEnvExpander() instructions.SingleWordExpander {
 	env := make(map[string]string, len(config.BuildArgs.Values))
 	for key, value := range config.BuildArgs.Values {
-		if value == nil {
-			env[key] = os.Getenv(key)
+		if value != nil {
+			env[key] = *value
 			continue
 		}
-		env[key] = *value
+		if value, ok := os.LookupEnv(key); ok {
+			env[key] = value
+		}
 	}
 	return func(word string) (string, error) {
 		if value, ok := env[word]; ok {

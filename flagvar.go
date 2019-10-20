@@ -26,7 +26,8 @@ func (fv *AssignmentsMap) Set(v string) error {
 	}
 	i := strings.Index(v, separator)
 	if i < 0 {
-		fv.Values[v[:i]] = nil
+		fv.Values[v] = nil
+		return nil
 	}
 	value := v[i+len(separator):]
 	fv.Values[v[:i]] = &value
