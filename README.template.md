@@ -1,6 +1,6 @@
 # ${APP}
 
-Prints Dockerfiles as JSON to stdout, optionally evaluates build args. Plays well with `jq`.
+Prints Dockerfiles as JSON to stdout, optionally evaluates build args. Uses the [official Dockerfile parser](https://github.com/moby/buildkit/blob/master/frontend/dockerfile/) from buildkit. Plays well with `jq`.
 
 ## Contents
 
