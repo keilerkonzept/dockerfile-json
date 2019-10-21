@@ -71,8 +71,6 @@ $ dockerfile-json Dockerfile | jq .
       "Name": "build",
       "BaseName": "alpine:3.10",
       "SourceCode": "FROM alpine:${ALPINE_TAG} AS build",
-      "FromStage": false,
-      "FromScratch": false,
       "Commands": [
         {
           "Name": "run",
@@ -91,7 +89,6 @@ $ dockerfile-json Dockerfile | jq .
       "SourceCode": "FROM build AS test",
       "FromStage": true,
       "FromStageIndex": 0,
-      "FromScratch": false,
       "Commands": [
         {
           "Name": "run",
@@ -107,7 +104,6 @@ $ dockerfile-json Dockerfile | jq .
     {
       "BaseName": "scratch",
       "SourceCode": "FROM scratch",
-      "FromStage": false,
       "FromScratch": true,
       "Commands": [
         {
