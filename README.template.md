@@ -47,6 +47,9 @@ ARG ALPINE_TAG=3.10
 FROM alpine:${ALPINE_TAG} AS build
 RUN echo "Hello world" > abc
 
+FROM build AS test
+RUN echo "foo" > bar
+
 FROM scratch
 COPY --from=build --chown=nobody:nobody abc .
 CMD ["echo"]
@@ -68,7 +71,6 @@ $ dockerfile-json Dockerfile | jq .
       "Name": "build",
       "BaseName": "alpine:3.10",
       "SourceCode": "FROM alpine:${ALPINE_TAG} AS build",
-      "Platform": "",
       "FromStage": false,
       "FromScratch": false,
       "Commands": [
@@ -84,10 +86,27 @@ $ dockerfile-json Dockerfile | jq .
       ]
     },
     {
-      "Name": "",
+      "Name": "test",
+      "BaseName": "build",
+      "SourceCode": "FROM build AS test",
+      "FromStage": true,
+      "FromStageIndex": 0,
+      "FromScratch": false,
+      "Commands": [
+        {
+          "Name": "run",
+          "Command": {
+            "CmdLine": [
+              "echo \"foo\" > bar"
+            ],
+            "PrependShell": true
+          }
+        }
+      ]
+    },
+    {
       "BaseName": "scratch",
       "SourceCode": "FROM scratch",
-      "Platform": "",
       "FromStage": false,
       "FromScratch": true,
       "Commands": [
@@ -98,7 +117,7 @@ $ dockerfile-json Dockerfile | jq .
               "abc",
               "."
             ],
-            "From": "build",
+            "From": "",
             "Chown": "nobody:nobody"
           }
         },

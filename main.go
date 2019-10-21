@@ -102,13 +102,14 @@ func main() {
 	}
 
 	type outStage struct {
-		Name        string
-		BaseName    string
-		SourceCode  string
-		Platform    string
-		FromStage   bool
-		FromScratch bool
-		Commands    []outCommand
+		Name           string `json:",omitempty"`
+		BaseName       string
+		SourceCode     string
+		Platform       string `json:",omitempty"`
+		FromStage      bool
+		FromStageIndex *int `json:",omitempty"`
+		FromScratch    bool
+		Commands       []outCommand
 	}
 
 	type outDockerfile struct {
@@ -119,22 +120,24 @@ func main() {
 	for _, dockerfile := range dockerfiles {
 		var out outDockerfile
 		out.MetaArgs = dockerfile.MetaArgs
-		seenStageNames := make(map[string]bool)
-		for _, stage := range dockerfile.Stages {
+		seenStageNames := make(map[string]int)
+		for i, stage := range dockerfile.Stages {
 			outStage := outStage{
 				Name:       stage.Name,
 				BaseName:   stage.BaseName,
 				SourceCode: stage.SourceCode,
 				Platform:   stage.Platform,
 			}
+			stageIndex, stageIndexOK := seenStageNames[stage.BaseName]
 			switch {
-			case seenStageNames[stage.BaseName]:
+			case stageIndexOK:
 				outStage.FromStage = true
+				outStage.FromStageIndex = &stageIndex
 			case stage.BaseName == "scratch":
 				outStage.FromScratch = true
 			}
 			if stage.Name != "" {
-				seenStageNames[stage.Name] = true
+				seenStageNames[stage.Name] = i
 			}
 			for _, command := range stage.Commands {
 				outStage.Commands = append(outStage.Commands, outCommand{
