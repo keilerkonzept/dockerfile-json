@@ -106,9 +106,9 @@ func main() {
 		BaseName       string
 		SourceCode     string
 		Platform       string `json:",omitempty"`
-		FromStage      bool
-		FromStageIndex *int `json:",omitempty"`
-		FromScratch    bool
+		FromStage      bool   `json:",omitempty"`
+		FromStageIndex *int   `json:",omitempty"`
+		FromScratch    bool   `json:",omitempty"`
 		Commands       []outCommand
 	}
 
