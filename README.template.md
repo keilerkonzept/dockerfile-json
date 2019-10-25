@@ -147,7 +147,7 @@ FROM openjdk:jre-alpine
 ```
 
 ```sh
-$ dockerfile-json Dockerfile | jq '.Stages[] | .Name | select(. != "")'
+$ dockerfile-json Dockerfile | jq '.Stages[] | .Name | select(.)'
 ```
 ```json
 "build"

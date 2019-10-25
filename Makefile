@@ -1,4 +1,4 @@
-VERSION = 0.3.4
+VERSION = 0.3.5
 
 APP      := dockerfile-json
 PACKAGES := $(shell go list -f {{.Dir}} ./...)
@@ -33,7 +33,6 @@ release/$(APP)_$(VERSION)_osx_x86_64.tar.gz: binaries/osx_x86_64/$(APP)
 
 binaries/osx_x86_64/$(APP): $(GOFILES)
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o binaries/osx_x86_64/$(APP) .
-	upx binaries/osx_x86_64/$(APP)
 
 release/$(APP)_$(VERSION)_windows_x86_64.zip: binaries/windows_x86_64/$(APP).exe
 	mkdir -p release
@@ -41,7 +40,6 @@ release/$(APP)_$(VERSION)_windows_x86_64.zip: binaries/windows_x86_64/$(APP).exe
 
 binaries/windows_x86_64/$(APP).exe: $(GOFILES)
 	GOOS=windows GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o binaries/windows_x86_64/$(APP).exe .
-	upx binaries/windows_x86_64/$(APP).exe
 
 release/$(APP)_$(VERSION)_linux_x86_64.tar.gz: binaries/linux_x86_64/$(APP)
 	mkdir -p release
@@ -49,7 +47,6 @@ release/$(APP)_$(VERSION)_linux_x86_64.tar.gz: binaries/linux_x86_64/$(APP)
 
 binaries/linux_x86_64/$(APP): $(GOFILES)
 	GOOS=linux GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o binaries/linux_x86_64/$(APP) .
-	upx binaries/linux_x86_64/$(APP)
 
 release/$(APP)_$(VERSION)_osx_x86_32.tar.gz: binaries/osx_x86_32/$(APP)
 	mkdir -p release
@@ -57,7 +54,6 @@ release/$(APP)_$(VERSION)_osx_x86_32.tar.gz: binaries/osx_x86_32/$(APP)
 
 binaries/osx_x86_32/$(APP): $(GOFILES)
 	GOOS=darwin GOARCH=386 go build -ldflags "-X main.version=$(VERSION)" -o binaries/osx_x86_32/$(APP) .
-	upx binaries/osx_x86_32/$(APP)
 
 release/$(APP)_$(VERSION)_windows_x86_32.zip: binaries/windows_x86_32/$(APP).exe
 	mkdir -p release
@@ -65,7 +61,6 @@ release/$(APP)_$(VERSION)_windows_x86_32.zip: binaries/windows_x86_32/$(APP).exe
 
 binaries/windows_x86_32/$(APP).exe: $(GOFILES)
 	GOOS=windows GOARCH=386 go build -ldflags "-X main.version=$(VERSION)" -o binaries/windows_x86_32/$(APP).exe .
-	upx binaries/windows_x86_32/$(APP).exe
 
 release/$(APP)_$(VERSION)_linux_x86_32.tar.gz: binaries/linux_x86_32/$(APP)
 	mkdir -p release
@@ -73,7 +68,6 @@ release/$(APP)_$(VERSION)_linux_x86_32.tar.gz: binaries/linux_x86_32/$(APP)
 
 binaries/linux_x86_32/$(APP): $(GOFILES)
 	GOOS=linux GOARCH=386 go build -ldflags "-X main.version=$(VERSION)" -o binaries/linux_x86_32/$(APP) .
-	upx binaries/linux_x86_32/$(APP)
 
 release/$(APP)_$(VERSION)_linux_arm64.tar.gz: binaries/linux_arm64/$(APP)
 	mkdir -p release
@@ -81,4 +75,3 @@ release/$(APP)_$(VERSION)_linux_arm64.tar.gz: binaries/linux_arm64/$(APP)
 
 binaries/linux_arm64/$(APP): $(GOFILES)
 	GOOS=linux GOARCH=arm64 go build -ldflags "-X main.version=$(VERSION)" -o binaries/linux_arm64/$(APP) .
-	upx binaries/linux_arm64/$(APP)
