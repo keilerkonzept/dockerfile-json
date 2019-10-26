@@ -9,19 +9,18 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/moby/buildkit/frontend/dockerfile/instructions"
-	"github.com/moby/buildkit/frontend/dockerfile/parser"
+	"github.com/keilerkonzept/dockerfile-json/pkg/dockerfile"
+	"github.com/yalp/jsonpath"
 )
 
-type dockerfile struct {
-	MetaArgs []instructions.ArgCommand
-	Stages   []instructions.Stage
-}
-
 var config struct {
-	Quiet     bool
-	Expand    bool
-	BuildArgs AssignmentsMap
+	Quiet          bool
+	Expand         bool
+	JSONPathString string
+	JSONPath       jsonpath.FilterFunc
+	JSONPathRaw    bool
+	BuildArgs      AssignmentsMap
+	NonzeroExit    bool
 }
 
 var name = "dockerfile-json"
@@ -36,15 +35,32 @@ func init() {
 	config.Expand = true
 	flag.BoolVar(&config.Quiet, "quiet", config.Quiet, "suppress log output (stderr)")
 	flag.BoolVar(&config.Expand, "expand-build-args", config.Expand, "expand build args")
+	flag.StringVar(&config.JSONPathString, "jsonpath", config.JSONPathString, "select parts of the output using JSONPath (https://goessner.net/articles/JsonPath)")
+	flag.BoolVar(&config.JSONPathRaw, "jsonpath-raw", config.JSONPathRaw, "when using JSONPath, output raw strings, not JSON values")
 	flag.Var(&config.BuildArgs, "build-arg", config.BuildArgs.Help())
 	flag.Parse()
 
 	if config.Quiet {
-		jsonOut = json.NewEncoder(ioutil.Discard)
+		log.SetOutput(ioutil.Discard)
+	}
+
+	if flag.NArg() == 0 {
+		flag.Usage()
+	}
+
+	if jsonPathString := config.JSONPathString; jsonPathString != "" {
+		if jsonPathString[0] != '$' {
+			jsonPathString = "$" + jsonPathString
+		}
+		jsonPath, err := jsonpath.Prepare(jsonPathString)
+		if err != nil {
+			log.Fatalf("parse jsonpath %s: %v", jsonPathString, err)
+		}
+		config.JSONPath = jsonPath
 	}
 }
 
-func buildArgEnvExpander() instructions.SingleWordExpander {
+func buildArgEnvExpander() dockerfile.SingleWordExpander {
 	env := make(map[string]string, len(config.BuildArgs.Values))
 	for key, value := range config.BuildArgs.Values {
 		if value != nil {
@@ -64,134 +80,67 @@ func buildArgEnvExpander() instructions.SingleWordExpander {
 }
 
 func main() {
-	var dockerfiles []dockerfile
+	var dockerfiles []*dockerfile.Dockerfile
 	for _, path := range flag.Args() {
-		func() {
-			f, err := os.Open(path)
-			defer f.Close()
-			if err != nil {
-				log.Printf("error: %q: %v", path, err)
-				return
-			}
-			result, err := parser.Parse(f)
-			if err != nil {
-				log.Printf("error: parse %q: %v", path, err)
-				return
-			}
-			stages, metaArgs, err := instructions.Parse(result.AST)
-			if err != nil {
-				log.Printf("error: parse %q: %v", path, err)
-				return
-			}
-			dockerfile := dockerfile{
-				MetaArgs: metaArgs,
-				Stages:   stages,
-			}
-			dockerfiles = append(dockerfiles, dockerfile)
-		}()
-	}
-	if config.Expand {
-		for _, dockerfile := range dockerfiles {
-			dockerfile.expand(buildArgEnvExpander())
-		}
-	}
-
-	type outCommand struct {
-		Name string
-		instructions.Command
-	}
-
-	type outStage struct {
-		Name           string `json:",omitempty"`
-		BaseName       string
-		SourceCode     string
-		Platform       string `json:",omitempty"`
-		FromStage      bool   `json:",omitempty"`
-		FromStageIndex *int   `json:",omitempty"`
-		FromScratch    bool   `json:",omitempty"`
-		Commands       []outCommand
-	}
-
-	type outDockerfile struct {
-		MetaArgs []instructions.ArgCommand
-		Stages   []outStage
-	}
-
-	for _, dockerfile := range dockerfiles {
-		var out outDockerfile
-		out.MetaArgs = dockerfile.MetaArgs
-		seenStageNames := make(map[string]int)
-		for i, stage := range dockerfile.Stages {
-			outStage := outStage{
-				Name:       stage.Name,
-				BaseName:   stage.BaseName,
-				SourceCode: stage.SourceCode,
-				Platform:   stage.Platform,
-			}
-			stageIndex, stageIndexOK := seenStageNames[stage.BaseName]
-			switch {
-			case stageIndexOK:
-				outStage.FromStage = true
-				outStage.FromStageIndex = &stageIndex
-			case stage.BaseName == "scratch":
-				outStage.FromScratch = true
-			}
-			if stage.Name != "" {
-				seenStageNames[stage.Name] = i
-			}
-			for _, command := range stage.Commands {
-				outStage.Commands = append(outStage.Commands, outCommand{
-					Name:    command.Name(),
-					Command: command,
-				})
-			}
-			out.Stages = append(out.Stages, outStage)
-		}
-		jsonOut.Encode(out)
-	}
-}
-
-func (d *dockerfile) expand(envExpander instructions.SingleWordExpander) {
-	metaArgsEnvExpander := d.metaArgsEnvExpander(envExpander)
-	for i, stage := range d.Stages {
-		d.Stages[i].BaseName = os.Expand(stage.BaseName, func(key string) string {
-			value, err := metaArgsEnvExpander(key)
-			if err != nil {
-				return ""
-			}
-			return value
-		})
-		for i := range stage.Commands {
-			cmdExpander, ok := stage.Commands[i].(instructions.SupportsSingleWordExpansion)
-			if ok {
-				cmdExpander.Expand(metaArgsEnvExpander)
-			}
-		}
-	}
-}
-
-func (d *dockerfile) metaArgsEnvExpander(envExpander instructions.SingleWordExpander) instructions.SingleWordExpander {
-	metaArgsEnv := make(map[string]string, len(d.MetaArgs))
-	for _, arg := range d.MetaArgs {
-		if arg.Value != nil {
-			metaArgsEnv[arg.Key] = *arg.Value
-		}
-		if value, err := envExpander(arg.Key); err == nil {
-			arg.Value = &value
-			metaArgsEnv[arg.Key] = value
-		}
-		err := arg.Expand(envExpander)
+		dockerfile, err := dockerfile.Parse(path)
 		if err != nil {
+			log.Printf("error: parse %q: %v", path, err)
+			config.NonzeroExit = true
 			continue
 		}
-		if arg.Value != nil {
-			metaArgsEnv[arg.Key] = *arg.Value
+		dockerfiles = append(dockerfiles, dockerfile)
+	}
+	if config.Expand {
+		env := buildArgEnvExpander()
+		for _, dockerfile := range dockerfiles {
+			dockerfile.Expand(env)
 		}
 	}
-	return func(key string) (string, error) {
-		if value, ok := metaArgsEnv[key]; ok {
-			return value, nil
+	switch {
+	case config.JSONPath != nil:
+		for _, dockerfile := range dockerfiles {
+			rawJSON, err := json.Marshal(dockerfile)
+			if err != nil {
+				log.Printf("error: evaluate jsonpath: %v", err)
+				config.NonzeroExit = true
+				continue
+			}
+			var data map[string]interface{}
+			if err := json.Unmarshal(rawJSON, &data); err != nil {
+				log.Printf("error: evaluate jsonpath: %v", err)
+				config.NonzeroExit = true
+				continue
+			}
+			result, err := config.JSONPath(data)
+			if err != nil {
+				log.Printf("error: evaluate jsonpath: %v", err)
+				config.NonzeroExit = true
+				continue
+			}
+			values, isArray := result.([]interface{})
+			value, isString := result.(string)
+			switch {
+			case isString && config.JSONPathRaw:
+				fmt.Println(value)
+			case isArray && config.JSONPathRaw:
+				for _, value := range values {
+					fmt.Println(value)
+				}
+			case isArray && !config.JSONPathRaw:
+				for _, value := range values {
+					jsonOut.Encode(value)
+				}
+			default:
+				jsonOut.Encode(result)
+			}
+
 		}
-		return "", fmt.Errorf("not defined: $%s", key)
+	default:
+		for _, dockerfile := range dockerfiles {
+			jsonOut.Encode(dockerfile)
+		}
+	}
+	if config.NonzeroExit {
+		os.Exit(1)
 	}
 }

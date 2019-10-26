@@ -1,0 +1,11 @@
+ARG ALPINE_TAG=3.10
+ARG APP_BASE=scratch
+
+FROM alpine:${ALPINE_TAG} AS build
+# ...
+
+FROM build
+# ...
+
+FROM ${APP_BASE}
+# ...

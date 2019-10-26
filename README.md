@@ -31,13 +31,17 @@ Or [download the binary for your platform](https://github.com/keilerkonzept/dock
 ### CLI
 
 ```text
-dockerfile-json
+dockerfile-json [PATHS...]
 
 Usage of dockerfile-json:
   -build-arg value
     	a key/value pair KEY[=VALUE]
   -expand-build-args
     	expand build args (default true)
+  -jsonpath string
+    	select parts of the output using JSONPath (https://goessner.net/articles/JsonPath)
+  -jsonpath-raw
+    	when using JSONPath, output raw strings, not JSON values
   -quiet
     	suppress log output (stderr)
 ```
@@ -69,6 +73,8 @@ $ dockerfile-json Dockerfile | jq .
   "MetaArgs": [
     {
       "Key": "ALPINE_TAG",
+      "DefaultValue": "3.10",
+      "ProvidedValue": null,
       "Value": "3.10"
     }
   ],
@@ -76,16 +82,19 @@ $ dockerfile-json Dockerfile | jq .
     {
       "Name": "build",
       "BaseName": "alpine:3.10",
-      "SourceCode": "FROM alpine:$ALPINE_TAG AS build",
+      "SourceCode": "FROM alpine:${ALPINE_TAG} AS build",
+      "Platform": "",
+      "As": "build",
+      "From": {
+        "Image": "alpine:3.10"
+      },
       "Commands": [
         {
+          "CmdLine": [
+            "echo \"Hello world\" > abc"
+          ],
           "Name": "run",
-          "Command": {
-            "CmdLine": [
-              "echo \"Hello world\" > abc"
-            ],
-            "PrependShell": true
-          }
+          "PrependShell": true
         }
       ]
     },
@@ -93,44 +102,48 @@ $ dockerfile-json Dockerfile | jq .
       "Name": "test",
       "BaseName": "build",
       "SourceCode": "FROM build AS test",
-      "FromStage": true,
-      "FromStageIndex": 0,
+      "Platform": "",
+      "As": "test",
+      "From": {
+        "Stage": {
+          "Named": "build",
+          "Index": 0
+        }
+      },
       "Commands": [
         {
+          "CmdLine": [
+            "echo \"foo\" > bar"
+          ],
           "Name": "run",
-          "Command": {
-            "CmdLine": [
-              "echo \"foo\" > bar"
-            ],
-            "PrependShell": true
-          }
+          "PrependShell": true
         }
       ]
     },
     {
+      "Name": "",
       "BaseName": "scratch",
       "SourceCode": "FROM scratch",
-      "FromScratch": true,
+      "Platform": "",
+      "From": {
+        "Scratch": true
+      },
       "Commands": [
         {
+          "Chown": "nobody:nobody",
+          "From": "build",
           "Name": "copy",
-          "Command": {
-            "SourcesAndDest": [
-              "abc",
-              "."
-            ],
-            "From": "",
-            "Chown": "nobody:nobody"
-          }
+          "SourcesAndDest": [
+            "abc",
+            "."
+          ]
         },
         {
+          "CmdLine": [
+            "echo"
+          ],
           "Name": "cmd",
-          "Command": {
-            "CmdLine": [
-              "echo"
-            ],
-            "PrependShell": false
-          }
+          "PrependShell": false
         }
       ]
     }
@@ -153,7 +166,7 @@ FROM openjdk:jre-alpine
 ```
 
 ```sh
-$ dockerfile-json Dockerfile | jq '.Stages[] | .Name | select(.)'
+$ dockerfile-json --jsonpath=..As Dockerfile
 ```
 ```json
 "build"
@@ -179,19 +192,32 @@ FROM $APP_BASE
 
 #### Expand build args, omit stage aliases and `scratch`
 
+Using `jq`:
 ```sh
 $ dockerfile-json Dockerfile |
-    jq '.Stages[] | select((.FromStage or .FromScratch)|not) | .BaseName'
+    jq '.Stages[] | select(.From | .Stage or .Scratch | not) | .BaseName'
+```
+Using `--jsonpath`:
+```sh
+
+$ dockerfile-json --jsonpath=..Image Dockerfile
 ```
 ```json
 "alpine:3.10"
 ```
 
+Using `--jsonpath`, `--jsonpath-raw` output:
+```sh
+$ dockerfile-json --jsonpath=..Image --jsonpath-raw Dockerfile
+```
+```json
+alpine:3.10
+```
+
 #### Set build args, omit stage aliases and `scratch`
 
 ```sh
-$ dockerfile-json --build-arg ALPINE_TAG=hello-world Dockerfile |
-    jq '.Stages[] | select((.FromStage or .FromScratch)|not) | .BaseName'
+$ dockerfile-json --build-arg ALPINE_TAG=hello-world --jsonpath=..Image Dockerfile
 ```
 ```json
 "alpine:hello-world"
@@ -200,7 +226,7 @@ $ dockerfile-json --build-arg ALPINE_TAG=hello-world Dockerfile |
 #### Expand build args, include all base names
 
 ```sh
-$  dockerfile-json Dockerfile | jq '.Stages[] | .BaseName'
+$  dockerfile-json --jsonpath=..BaseName Dockerfile
 ```
 ```json
 "alpine:3.10"
@@ -211,10 +237,10 @@ $  dockerfile-json Dockerfile | jq '.Stages[] | .BaseName'
 #### Ignore build args, include all base names
 
 ```sh
-$ dockerfile-json --expand-build-args=false Dockerfile | jq '.Stages[] | .BaseName'
+$ dockerfile-json --expand-build-args=false --jsonpath=..BaseName Dockerfile
 ```
 ```json
-"alpine:$ALPINE_TAG"
+"alpine:${ALPINE_TAG}"
 "build"
-"$APP_BASE"
+"${APP_BASE}"
 ```

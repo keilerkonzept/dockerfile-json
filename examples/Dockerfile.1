@@ -1,0 +1,11 @@
+ARG ALPINE_TAG=3.10
+
+FROM alpine:${ALPINE_TAG} AS build
+RUN echo "Hello world" > abc
+
+FROM build AS test
+RUN echo "foo" > bar
+
+FROM scratch
+COPY --from=build --chown=nobody:nobody abc .
+CMD ["echo"]
