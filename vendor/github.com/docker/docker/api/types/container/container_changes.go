@@ -6,11 +6,15 @@ package container // import "github.com/docker/docker/api/types/container"
 // See hack/generate-swagger-api.sh
 // ----------------------------------------------------------------------------
 
-// ContainerUpdateOKBody OK response to ContainerUpdate operation
-// swagger:model ContainerUpdateOKBody
-type ContainerUpdateOKBody struct {
+// ContainerChangeResponseItem change item in response to ContainerChanges operation
+// swagger:model ContainerChangeResponseItem
+type ContainerChangeResponseItem struct {
 
-	// warnings
+	// Kind of change
 	// Required: true
-	Warnings []string `json:"Warnings"`
+	Kind uint8 `json:"Kind"`
+
+	// Path to file that has changed
+	// Required: true
+	Path string `json:"Path"`
 }

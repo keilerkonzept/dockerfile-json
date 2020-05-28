@@ -6,15 +6,15 @@ package container // import "github.com/docker/docker/api/types/container"
 // See hack/generate-swagger-api.sh
 // ----------------------------------------------------------------------------
 
-// ContainerCreateCreatedBody OK response to ContainerCreate operation
-// swagger:model ContainerCreateCreatedBody
-type ContainerCreateCreatedBody struct {
+// ContainerTopOKBody OK response to ContainerTop operation
+// swagger:model ContainerTopOKBody
+type ContainerTopOKBody struct {
 
-	// The ID of the created container
+	// Each process running in the container, where each is process is an array of values corresponding to the titles
 	// Required: true
-	ID string `json:"Id"`
+	Processes [][]string `json:"Processes"`
 
-	// Warnings encountered when creating the container
+	// The ps column titles
 	// Required: true
-	Warnings []string `json:"Warnings"`
+	Titles []string `json:"Titles"`
 }
