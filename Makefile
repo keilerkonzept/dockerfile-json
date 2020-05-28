@@ -1,6 +1,6 @@
-VERSION = 1.0.2
+VERSION := $(shell jq -r .version <package.json)
 
-APP      := dockerfile-json
+APP      := $(shell jq -r .name <package.json)
 PACKAGES := $(shell go list -f {{.Dir}} ./...)
 GOFILES  := $(addsuffix /*.go,$(PACKAGES))
 GOFILES  := $(wildcard $(GOFILES))
