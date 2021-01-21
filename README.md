@@ -84,6 +84,19 @@ $ dockerfile-json Dockerfile | jq .
       "BaseName": "alpine:3.10",
       "SourceCode": "FROM alpine:${ALPINE_TAG} AS build",
       "Platform": "",
+      "Location": [
+        {
+          "Start": {
+            "Line": 3,
+            "Character": 0
+          },
+          "End": {
+            "Line": 3,
+            "Character": 0
+          }
+        }
+      ],
+      "Comment": "",
       "As": "build",
       "From": {
         "Image": "alpine:3.10"
@@ -103,6 +116,19 @@ $ dockerfile-json Dockerfile | jq .
       "BaseName": "build",
       "SourceCode": "FROM build AS test",
       "Platform": "",
+      "Location": [
+        {
+          "Start": {
+            "Line": 6,
+            "Character": 0
+          },
+          "End": {
+            "Line": 6,
+            "Character": 0
+          }
+        }
+      ],
+      "Comment": "",
       "As": "test",
       "From": {
         "Stage": {
@@ -125,11 +151,25 @@ $ dockerfile-json Dockerfile | jq .
       "BaseName": "scratch",
       "SourceCode": "FROM scratch",
       "Platform": "",
+      "Location": [
+        {
+          "Start": {
+            "Line": 9,
+            "Character": 0
+          },
+          "End": {
+            "Line": 9,
+            "Character": 0
+          }
+        }
+      ],
+      "Comment": "",
       "From": {
         "Scratch": true
       },
       "Commands": [
         {
+          "Chmod": "",
           "Chown": "nobody:nobody",
           "From": "build",
           "Name": "copy",
@@ -197,6 +237,10 @@ Using `jq`:
 $ dockerfile-json Dockerfile |
     jq '.Stages[] | select(.From | .Stage or .Scratch | not) | .BaseName'
 ```
+```json
+"alpine:3.10"
+```
+
 Using `--jsonpath`:
 ```sh
 

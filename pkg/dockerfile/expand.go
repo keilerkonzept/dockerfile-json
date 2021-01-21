@@ -48,8 +48,10 @@ func (d *Dockerfile) metaArgsEnvExpander(env instructions.SingleWordExpander) in
 		if err != nil {
 			continue
 		}
-		if arg.Value != nil {
-			metaArgsEnv[arg.Key] = *arg.ArgCommand.Value
+		for _, kv := range arg.ArgCommand.Args {
+			if kv.Value != nil {
+				metaArgsEnv[arg.Key] = *kv.Value
+			}
 		}
 	}
 	return func(key string) (string, error) {

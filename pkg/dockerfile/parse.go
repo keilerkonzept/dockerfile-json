@@ -30,15 +30,17 @@ func ParseReader(r io.Reader) (*Dockerfile, error) {
 	var out Dockerfile
 	for _, metaArg := range metaArgs {
 		metaArgOut := &MetaArg{ArgCommand: metaArg}
-		metaArgOut.Key = metaArg.Key
-		if defaultValue := metaArg.Value; defaultValue != nil {
-			{
-				defaultValueCopy := *defaultValue
-				metaArgOut.DefaultValue = &defaultValueCopy
-			}
-			{
-				defaultValueCopy := *defaultValue
-				metaArgOut.Value = &defaultValueCopy
+		for _, kv := range metaArg.Args {
+			metaArgOut.Key = kv.Key
+			if defaultValue := kv.Value; defaultValue != nil {
+				{
+					defaultValueCopy := *defaultValue
+					metaArgOut.DefaultValue = &defaultValueCopy
+				}
+				{
+					defaultValueCopy := *defaultValue
+					metaArgOut.Value = &defaultValueCopy
+				}
 			}
 		}
 		out.MetaArgs = append(out.MetaArgs, metaArgOut)

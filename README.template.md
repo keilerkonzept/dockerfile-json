@@ -107,6 +107,10 @@ Using `jq`:
 $ dockerfile-json Dockerfile |
     jq '.Stages[] | select(.From | .Stage or .Scratch | not) | .BaseName'
 ```
+```json
+${EXAMPLE_3A}
+```
+
 Using `--jsonpath`:
 ```sh
 
