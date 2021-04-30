@@ -15,7 +15,7 @@ github.com/gogo/protobuf/sortkeys
 github.com/gogo/protobuf/types
 # github.com/golang/protobuf v1.4.2
 github.com/golang/protobuf/proto
-# github.com/moby/buildkit v0.8.2
+# github.com/moby/buildkit v0.8.3
 github.com/moby/buildkit/frontend/dockerfile/command
 github.com/moby/buildkit/frontend/dockerfile/instructions
 github.com/moby/buildkit/frontend/dockerfile/parser
