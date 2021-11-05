@@ -106,7 +106,9 @@ $ dockerfile-json Dockerfile | jq .
           "CmdLine": [
             "echo \"Hello world\" > abc"
           ],
-          "Name": "run",
+          "Files": null,
+          "FlagsUsed": [],
+          "Name": "RUN",
           "PrependShell": true
         }
       ]
@@ -141,7 +143,9 @@ $ dockerfile-json Dockerfile | jq .
           "CmdLine": [
             "echo \"foo\" > bar"
           ],
-          "Name": "run",
+          "Files": null,
+          "FlagsUsed": [],
+          "Name": "RUN",
           "PrependShell": true
         }
       ]
@@ -171,18 +175,20 @@ $ dockerfile-json Dockerfile | jq .
         {
           "Chmod": "",
           "Chown": "nobody:nobody",
+          "DestPath": ".",
           "From": "build",
-          "Name": "copy",
-          "SourcesAndDest": [
-            "abc",
-            "."
+          "Name": "COPY",
+          "SourceContents": null,
+          "SourcePaths": [
+            "abc"
           ]
         },
         {
           "CmdLine": [
             "echo"
           ],
-          "Name": "cmd",
+          "Files": null,
+          "Name": "CMD",
           "PrependShell": false
         }
       ]
