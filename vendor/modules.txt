@@ -28,7 +28,7 @@ github.com/gogo/protobuf/sortkeys
 github.com/gogo/protobuf/types
 # github.com/golang/protobuf v1.5.2
 github.com/golang/protobuf/proto
-# github.com/moby/buildkit v0.10.0
+# github.com/moby/buildkit v0.10.1
 github.com/moby/buildkit/frontend/dockerfile/command
 github.com/moby/buildkit/frontend/dockerfile/instructions
 github.com/moby/buildkit/frontend/dockerfile/parser
@@ -37,7 +37,7 @@ github.com/moby/buildkit/util/stack
 github.com/moby/buildkit/util/suggest
 # github.com/opencontainers/go-digest v1.0.0
 github.com/opencontainers/go-digest
-# github.com/opencontainers/image-spec v1.0.2-0.20211117181255-693428a734f5
+# github.com/opencontainers/image-spec v1.0.3-0.20211202183452-c5a74bcca799
 github.com/opencontainers/image-spec/specs-go
 github.com/opencontainers/image-spec/specs-go/v1
 # github.com/pkg/errors v0.9.1
