@@ -1,8 +1,16 @@
 # github.com/agext/levenshtein v1.2.3
 github.com/agext/levenshtein
+# github.com/containerd/containerd v1.6.3-0.20220401172941-5ff8fce1fcc6 => github.com/containerd/containerd v1.3.1-0.20200512144102-f13ba8f2f2fd
+github.com/containerd/containerd/errdefs
 # github.com/containerd/typeurl v1.0.2
 github.com/containerd/typeurl
-# github.com/docker/docker v20.10.7+incompatible
+# github.com/coreos/go-systemd/v22 v22.3.2
+github.com/coreos/go-systemd/v22/dbus
+# github.com/cyphar/filepath-securejoin v0.2.3
+github.com/cyphar/filepath-securejoin
+# github.com/docker/distribution v2.8.1+incompatible
+github.com/docker/distribution/registry/api/errcode
+# github.com/docker/docker v20.10.7+incompatible => github.com/docker/docker v17.12.0-ce-rc1.0.20200310163718-4634ce647cf2+incompatible
 github.com/docker/docker/api/types
 github.com/docker/docker/api/types/blkiodev
 github.com/docker/docker/api/types/container
@@ -14,36 +22,70 @@ github.com/docker/docker/api/types/strslice
 github.com/docker/docker/api/types/swarm
 github.com/docker/docker/api/types/swarm/runtime
 github.com/docker/docker/api/types/versions
+github.com/docker/docker/daemon/cluster/provider
+github.com/docker/docker/daemon/network
+github.com/docker/docker/errdefs
 github.com/docker/docker/opts
 github.com/docker/docker/pkg/homedir
+github.com/docker/docker/pkg/parsers
+github.com/docker/docker/pkg/sysinfo
+github.com/docker/docker/runconfig
 # github.com/docker/go-connections v0.4.0
 github.com/docker/go-connections/nat
 # github.com/docker/go-units v0.4.0
 github.com/docker/go-units
 # github.com/docker/libnetwork v0.8.0-dev.2.0.20200917202933-d0951081b35f
 github.com/docker/libnetwork/ipamutils
+# github.com/godbus/dbus/v5 v5.0.6
+github.com/godbus/dbus/v5
 # github.com/gogo/protobuf v1.3.2
 github.com/gogo/protobuf/proto
 github.com/gogo/protobuf/sortkeys
 github.com/gogo/protobuf/types
 # github.com/golang/protobuf v1.5.2
 github.com/golang/protobuf/proto
-# github.com/moby/buildkit v0.10.3
+github.com/golang/protobuf/ptypes
+github.com/golang/protobuf/ptypes/any
+github.com/golang/protobuf/ptypes/duration
+github.com/golang/protobuf/ptypes/timestamp
+# github.com/moby/buildkit v0.10.4
 github.com/moby/buildkit/frontend/dockerfile/command
 github.com/moby/buildkit/frontend/dockerfile/instructions
 github.com/moby/buildkit/frontend/dockerfile/parser
 github.com/moby/buildkit/frontend/dockerfile/shell
 github.com/moby/buildkit/util/stack
 github.com/moby/buildkit/util/suggest
+# github.com/moby/sys/mountinfo v0.6.0
+github.com/moby/sys/mountinfo
 # github.com/opencontainers/go-digest v1.0.0
 github.com/opencontainers/go-digest
 # github.com/opencontainers/image-spec v1.0.3-0.20211202183452-c5a74bcca799
 github.com/opencontainers/image-spec/specs-go
 github.com/opencontainers/image-spec/specs-go/v1
+# github.com/opencontainers/runc v1.1.1
+github.com/opencontainers/runc/libcontainer/cgroups
+github.com/opencontainers/runc/libcontainer/configs
+github.com/opencontainers/runc/libcontainer/devices
+github.com/opencontainers/runc/libcontainer/user
+github.com/opencontainers/runc/libcontainer/userns
+# github.com/opencontainers/runtime-spec v1.0.3-0.20210326190908-1c3f411f0417
+github.com/opencontainers/runtime-spec/specs-go
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
+# github.com/sirupsen/logrus v1.8.1
+github.com/sirupsen/logrus
 # github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
 github.com/yalp/jsonpath
+# golang.org/x/sys v0.0.0-20220114195835-da31bd327af9
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa
+google.golang.org/genproto/googleapis/rpc/status
+# google.golang.org/grpc v1.45.0
+google.golang.org/grpc/codes
+google.golang.org/grpc/internal/status
+google.golang.org/grpc/status
 # google.golang.org/protobuf v1.27.1
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
@@ -72,3 +114,6 @@ google.golang.org/protobuf/reflect/protoregistry
 google.golang.org/protobuf/runtime/protoiface
 google.golang.org/protobuf/runtime/protoimpl
 google.golang.org/protobuf/types/descriptorpb
+google.golang.org/protobuf/types/known/anypb
+google.golang.org/protobuf/types/known/durationpb
+google.golang.org/protobuf/types/known/timestamppb
