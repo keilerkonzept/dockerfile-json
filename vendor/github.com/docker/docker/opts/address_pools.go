@@ -12,12 +12,12 @@ import (
 
 // PoolsOpt is a Value type for parsing the default address pools definitions
 type PoolsOpt struct {
-	Values []*types.NetworkToSplit
+	values []*types.NetworkToSplit
 }
 
 // UnmarshalJSON fills values structure  info from JSON input
 func (p *PoolsOpt) UnmarshalJSON(raw []byte) error {
-	return json.Unmarshal(raw, &(p.Values))
+	return json.Unmarshal(raw, &(p.values))
 }
 
 // Set predefined pools
@@ -53,7 +53,7 @@ func (p *PoolsOpt) Set(value string) error {
 		}
 	}
 
-	p.Values = append(p.Values, &poolsDef)
+	p.values = append(p.values, &poolsDef)
 
 	return nil
 }
@@ -66,7 +66,7 @@ func (p *PoolsOpt) Type() string {
 // String returns a string repr of this option
 func (p *PoolsOpt) String() string {
 	var pools []string
-	for _, pool := range p.Values {
+	for _, pool := range p.values {
 		repr := fmt.Sprintf("%s %d", pool.Base, pool.Size)
 		pools = append(pools, repr)
 	}
@@ -75,7 +75,7 @@ func (p *PoolsOpt) String() string {
 
 // Value returns the mounts
 func (p *PoolsOpt) Value() []*types.NetworkToSplit {
-	return p.Values
+	return p.values
 }
 
 // Name returns the flag name of this option
