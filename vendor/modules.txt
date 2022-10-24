@@ -4,7 +4,7 @@ github.com/Sirupsen/logrus
 # github.com/agext/levenshtein v1.2.3
 ## explicit
 github.com/agext/levenshtein
-# github.com/containerd/containerd v1.6.3-0.20220401172941-5ff8fce1fcc6 => github.com/containerd/containerd v1.6.8
+# github.com/containerd/containerd v1.6.3-0.20220401172941-5ff8fce1fcc6 => github.com/containerd/containerd v1.6.9
 ## explicit; go 1.17
 # github.com/containerd/typeurl v1.0.2
 ## explicit; go 1.13
@@ -94,24 +94,24 @@ github.com/vishvananda/netns
 # github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
 ## explicit
 github.com/yalp/jsonpath
-# golang.org/x/crypto v0.0.0-20211202192323-5770296d904e
+# golang.org/x/crypto v0.0.0-20220315160706-3147a52a75dd
 ## explicit; go 1.17
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/sys v0.0.0-20220412211240-33da011f77ad
+# golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f
 ## explicit; go 1.17
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.0.0-20210615171337-6886f2dfbf5b
+# golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
 ## explicit; go 1.17
 golang.org/x/term
-# google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa
-## explicit; go 1.11
-# google.golang.org/grpc v1.45.0
+# google.golang.org/genproto v0.0.0-20220502173005-c8bf987b8c21
+## explicit; go 1.15
+# google.golang.org/grpc v1.47.0
 ## explicit; go 1.14
-# google.golang.org/protobuf v1.27.1
-## explicit; go 1.9
+# google.golang.org/protobuf v1.28.0
+## explicit; go 1.11
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
 google.golang.org/protobuf/internal/descfmt
@@ -139,5 +139,5 @@ google.golang.org/protobuf/reflect/protoregistry
 google.golang.org/protobuf/runtime/protoiface
 google.golang.org/protobuf/runtime/protoimpl
 google.golang.org/protobuf/types/descriptorpb
-# github.com/containerd/containerd => github.com/containerd/containerd v1.6.8
+# github.com/containerd/containerd => github.com/containerd/containerd v1.6.9
 # github.com/docker/docker/v20 => github.com/docker/docker v20.10.20+incompatible
