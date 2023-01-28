@@ -40,6 +40,6 @@ require (
 )
 
 replace (
-	github.com/containerd/containerd => github.com/containerd/containerd v1.6.15
+	github.com/containerd/containerd => github.com/containerd/containerd v1.6.16
 	github.com/docker/docker/v20 => github.com/docker/docker v20.10.23+incompatible
 )
