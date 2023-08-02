@@ -3,7 +3,7 @@ module github.com/keilerkonzept/dockerfile-json
 go 1.19
 
 require (
-	github.com/moby/buildkit v0.12.0
+	github.com/moby/buildkit v0.12.1
 	github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
 )
 
@@ -16,7 +16,7 @@ require (
 	github.com/coreos/go-systemd/v22 v22.5.0 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.3 // indirect
 	github.com/docker/distribution v2.8.2+incompatible // indirect
-	github.com/docker/docker v24.0.0-rc.2.0.20230706181717-98d3da79ef9c+incompatible // indirect
+	github.com/docker/docker v24.0.0-rc.2.0.20230718135204-8e51b8b59cb8+incompatible // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.5.0 // indirect
 	github.com/docker/libnetwork v0.5.6 // indirect
