@@ -3,7 +3,7 @@
 # github.com/agext/levenshtein v1.2.3
 ## explicit
 github.com/agext/levenshtein
-# github.com/containerd/containerd v1.7.2 => github.com/containerd/containerd v1.7.6
+# github.com/containerd/containerd v1.7.2 => github.com/containerd/containerd v1.7.7
 ## explicit; go 1.19
 # github.com/containerd/typeurl v1.0.2
 ## explicit; go 1.13
@@ -58,7 +58,7 @@ github.com/moby/buildkit/util/suggest
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
-# github.com/sirupsen/logrus v1.9.0
+# github.com/sirupsen/logrus v1.9.3
 ## explicit; go 1.13
 # github.com/vishvananda/netlink v1.2.1-beta.2
 ## explicit; go 1.12
@@ -67,11 +67,11 @@ github.com/pkg/errors
 # github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
 ## explicit
 github.com/yalp/jsonpath
-# golang.org/x/crypto v0.2.0
+# golang.org/x/crypto v0.11.0
 ## explicit; go 1.17
-# golang.org/x/sys v0.7.0
+# golang.org/x/sys v0.10.0
 ## explicit; go 1.17
-# golang.org/x/term v0.6.0
+# golang.org/x/term v0.10.0
 ## explicit; go 1.17
 # google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4
 ## explicit; go 1.19
@@ -104,5 +104,5 @@ google.golang.org/protobuf/reflect/protoreflect
 google.golang.org/protobuf/reflect/protoregistry
 google.golang.org/protobuf/runtime/protoiface
 google.golang.org/protobuf/runtime/protoimpl
-# github.com/containerd/containerd => github.com/containerd/containerd v1.7.6
+# github.com/containerd/containerd => github.com/containerd/containerd v1.7.7
 # github.com/docker/docker/v23/v20 => github.com/docker/docker v24.0.6+incompatible
