@@ -12,7 +12,7 @@ github.com/agext/levenshtein
 github.com/containerd/typeurl/v2
 # github.com/coreos/go-systemd/v22 v22.5.0
 ## explicit; go 1.12
-# github.com/cyphar/filepath-securejoin v0.2.3
+# github.com/cyphar/filepath-securejoin v0.2.4
 ## explicit; go 1.13
 # github.com/docker/distribution v2.8.2+incompatible
 ## explicit
@@ -37,7 +37,7 @@ github.com/docker/go-units
 github.com/gogo/protobuf/proto
 # github.com/golang/protobuf v1.5.3
 ## explicit; go 1.9
-# github.com/moby/buildkit v0.12.4
+# github.com/moby/buildkit v0.12.5
 ## explicit; go 1.20
 github.com/moby/buildkit/frontend/dockerfile/command
 github.com/moby/buildkit/frontend/dockerfile/instructions
