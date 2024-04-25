@@ -42,7 +42,7 @@ github.com/docker/go-units
 github.com/gogo/protobuf/proto
 # github.com/golang/protobuf v1.5.4
 ## explicit; go 1.17
-# github.com/moby/buildkit v0.13.1
+# github.com/moby/buildkit v0.13.2
 ## explicit; go 1.21
 github.com/moby/buildkit/frontend/dockerfile/command
 github.com/moby/buildkit/frontend/dockerfile/instructions
@@ -75,11 +75,11 @@ github.com/pkg/errors
 # github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
 ## explicit
 github.com/yalp/jsonpath
-# golang.org/x/crypto v0.17.0
+# golang.org/x/crypto v0.21.0
 ## explicit; go 1.18
-# golang.org/x/sys v0.16.0
+# golang.org/x/sys v0.18.0
 ## explicit; go 1.18
-# golang.org/x/term v0.15.0
+# golang.org/x/term v0.18.0
 ## explicit; go 1.18
 # google.golang.org/genproto v0.0.0-20231016165738-49dd2c1f3d0b
 ## explicit; go 1.19
