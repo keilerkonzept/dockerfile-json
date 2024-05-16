@@ -44,5 +44,5 @@ require (
 
 replace (
 	github.com/containerd/containerd => github.com/containerd/containerd v1.7.16
-	github.com/docker/docker/v23/v20 => github.com/docker/docker v26.1.2+incompatible
+	github.com/docker/docker/v23/v20 => github.com/docker/docker v26.1.3+incompatible
 )
