@@ -2,7 +2,7 @@ module github.com/keilerkonzept/dockerfile-json
 
 go 1.21
 
-toolchain go1.22.4
+toolchain go1.22.5
 
 require (
 	github.com/moby/buildkit v0.14.1
