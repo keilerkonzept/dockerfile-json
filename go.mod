@@ -39,12 +39,12 @@ require (
 	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/term v0.20.0 // indirect
-	google.golang.org/genproto v0.0.0-20231016165738-49dd2c1f3d0b // indirect
+	google.golang.org/genproto v0.0.0-20231211222908-989df2bf70f3 // indirect
 	google.golang.org/grpc v1.59.0 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 )
 
 replace (
-	github.com/containerd/containerd => github.com/containerd/containerd v1.7.19
+	github.com/containerd/containerd => github.com/containerd/containerd v1.7.20
 	github.com/docker/docker/v23/v20 => github.com/docker/docker v27.0.3+incompatible
 )

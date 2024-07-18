@@ -3,7 +3,7 @@
 # github.com/agext/levenshtein v1.2.3
 ## explicit
 github.com/agext/levenshtein
-# github.com/containerd/containerd v1.7.19 => github.com/containerd/containerd v1.7.19
+# github.com/containerd/containerd v1.7.19 => github.com/containerd/containerd v1.7.20
 ## explicit; go 1.21
 # github.com/containerd/typeurl v1.0.2
 ## explicit; go 1.13
@@ -78,7 +78,7 @@ github.com/yalp/jsonpath
 ## explicit; go 1.18
 # golang.org/x/term v0.20.0
 ## explicit; go 1.18
-# google.golang.org/genproto v0.0.0-20231016165738-49dd2c1f3d0b
+# google.golang.org/genproto v0.0.0-20231211222908-989df2bf70f3
 ## explicit; go 1.19
 # google.golang.org/grpc v1.59.0
 ## explicit; go 1.19
@@ -110,5 +110,5 @@ google.golang.org/protobuf/reflect/protoreflect
 google.golang.org/protobuf/reflect/protoregistry
 google.golang.org/protobuf/runtime/protoiface
 google.golang.org/protobuf/runtime/protoimpl
-# github.com/containerd/containerd => github.com/containerd/containerd v1.7.19
+# github.com/containerd/containerd => github.com/containerd/containerd v1.7.20
 # github.com/docker/docker/v23/v20 => github.com/docker/docker v27.0.3+incompatible
