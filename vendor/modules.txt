@@ -32,7 +32,7 @@ github.com/docker/go-units
 github.com/gogo/protobuf/proto
 # github.com/golang/protobuf v1.5.4
 ## explicit; go 1.17
-# github.com/moby/buildkit v0.15.1
+# github.com/moby/buildkit v0.15.2
 ## explicit; go 1.21.0
 github.com/moby/buildkit/frontend/dockerfile/command
 github.com/moby/buildkit/frontend/dockerfile/instructions

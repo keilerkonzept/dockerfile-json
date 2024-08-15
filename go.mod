@@ -5,7 +5,7 @@ go 1.21.0
 toolchain go1.23.0
 
 require (
-	github.com/moby/buildkit v0.15.1
+	github.com/moby/buildkit v0.15.2
 	github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
 )
 
