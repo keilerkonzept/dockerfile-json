@@ -1,8 +1,0 @@
-{
-  "extends": [
-    "config:base"
-  ],
-  "bumpVersion": "patch",
-  "automerge": true,
-  "requiredStatusChecks": null
-}
