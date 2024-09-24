@@ -11,7 +11,10 @@ func (c *Command) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("merge json fields: %v", err)
 	}
 	out := map[string]interface{}{
-		"Name": c.Name,
+		"Name":        c.Name,
+		"Mounts":      c.Mounts,
+		"NetworkMode": c.NetworkMode,
+		"Security":    c.Security,
 	}
 	if err := json.Unmarshal(rawJSON, &out); err != nil {
 		return nil, fmt.Errorf("merge json fields: %v", err)

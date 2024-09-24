@@ -49,6 +49,12 @@ func ParseReader(r io.Reader) (*Dockerfile, error) {
 		outStage := &Stage{Stage: stage}
 		for _, command := range stage.Commands {
 			outCommand := &Command{Command: command}
+			switch command := command.(type) {
+			case *instructions.RunCommand:
+				outCommand.Mounts = instructions.GetMounts(command)
+				outCommand.NetworkMode = instructions.GetNetwork(command)
+				outCommand.Security = instructions.GetSecurity(command)
+			}
 			outStage.Commands = append(outStage.Commands, outCommand)
 		}
 		out.Stages = append(out.Stages, outStage)
