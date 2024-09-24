@@ -81,9 +81,11 @@ $ dockerfile-json Dockerfile | jq .
   "Stages": [
     {
       "Name": "build",
+      "OrigCmd": "FROM",
       "BaseName": "alpine:3.10",
-      "SourceCode": "FROM alpine:${ALPINE_TAG} AS build",
       "Platform": "",
+      "Comment": "",
+      "SourceCode": "FROM alpine:${ALPINE_TAG} AS build",
       "Location": [
         {
           "Start": {
@@ -96,7 +98,6 @@ $ dockerfile-json Dockerfile | jq .
           }
         }
       ],
-      "Comment": "",
       "As": "build",
       "From": {
         "Image": "alpine:3.10"
@@ -107,17 +108,24 @@ $ dockerfile-json Dockerfile | jq .
             "echo \"Hello world\" > abc"
           ],
           "Files": null,
-          "FlagsUsed": [],
+          "FlagsUsed": [
+            "network"
+          ],
+          "Mounts": [],
           "Name": "RUN",
-          "PrependShell": true
+          "NetworkMode": "host",
+          "PrependShell": true,
+          "Security": "sandbox"
         }
       ]
     },
     {
       "Name": "test",
+      "OrigCmd": "FROM",
       "BaseName": "build",
-      "SourceCode": "FROM build AS test",
       "Platform": "",
+      "Comment": "",
+      "SourceCode": "FROM build AS test",
       "Location": [
         {
           "Start": {
@@ -130,7 +138,6 @@ $ dockerfile-json Dockerfile | jq .
           }
         }
       ],
-      "Comment": "",
       "As": "test",
       "From": {
         "Stage": {
@@ -144,17 +151,24 @@ $ dockerfile-json Dockerfile | jq .
             "echo \"foo\" > bar"
           ],
           "Files": null,
-          "FlagsUsed": [],
+          "FlagsUsed": [
+            "security"
+          ],
+          "Mounts": [],
           "Name": "RUN",
-          "PrependShell": true
+          "NetworkMode": "default",
+          "PrependShell": true,
+          "Security": "insecure"
         }
       ]
     },
     {
       "Name": "",
+      "OrigCmd": "FROM",
       "BaseName": "scratch",
-      "SourceCode": "FROM scratch",
       "Platform": "",
+      "Comment": "",
+      "SourceCode": "FROM scratch",
       "Location": [
         {
           "Start": {
@@ -167,7 +181,6 @@ $ dockerfile-json Dockerfile | jq .
           }
         }
       ],
-      "Comment": "",
       "From": {
         "Scratch": true
       },
@@ -176,20 +189,57 @@ $ dockerfile-json Dockerfile | jq .
           "Chmod": "",
           "Chown": "nobody:nobody",
           "DestPath": ".",
+          "ExcludePatterns": null,
           "From": "build",
+          "Link": false,
+          "Mounts": null,
           "Name": "COPY",
+          "NetworkMode": "",
+          "Parents": false,
+          "Security": "",
           "SourceContents": null,
           "SourcePaths": [
             "abc"
           ]
         },
         {
+          "CmdLine": [],
+          "Files": null,
+          "FlagsUsed": [
+            "mount"
+          ],
+          "Mounts": [
+            {
+              "Type": "bind",
+              "From": "",
+              "Source": "",
+              "Target": "",
+              "ReadOnly": true,
+              "SizeLimit": 0,
+              "CacheID": "",
+              "CacheSharing": "",
+              "Required": false,
+              "Env": null,
+              "Mode": null,
+              "UID": null,
+              "GID": null
+            }
+          ],
+          "Name": "RUN",
+          "NetworkMode": "default",
+          "PrependShell": true,
+          "Security": "sandbox"
+        },
+        {
           "CmdLine": [
             "echo"
           ],
           "Files": null,
+          "Mounts": null,
           "Name": "CMD",
-          "PrependShell": false
+          "NetworkMode": "",
+          "PrependShell": false,
+          "Security": ""
         }
       ]
     }

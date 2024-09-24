@@ -12,9 +12,9 @@ type Dockerfile struct {
 type MetaArg struct {
 	instructions.ArgCommand `json:"-"`
 	Key                     string
-	DefaultValue            *string `json:","`
-	ProvidedValue           *string `json:","`
-	Value                   *string `json:","`
+	DefaultValue            *string
+	ProvidedValue           *string
+	Value                   *string
 }
 
 type From struct {
@@ -30,7 +30,10 @@ type FromStage struct {
 
 type Command struct {
 	instructions.Command
-	Name string
+	Name        string
+	Mounts      []*instructions.Mount
+	NetworkMode instructions.NetworkMode
+	Security    string
 }
 
 type Stage struct {
