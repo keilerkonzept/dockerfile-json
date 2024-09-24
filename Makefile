@@ -30,9 +30,9 @@ README.md:
 		EXAMPLE_1="$$($(APP) examples/Dockerfile.1 | jq .)" \
 		VERSION="$(VERSION)" APP="$(APP)" USAGE="$$($(APP) -h 2>&1)" > README.md
 
-zip: release/$(APP)_$(VERSION)_osx_x86_64.tar.gz release/$(APP)_$(VERSION)_windows_x86_64.zip release/$(APP)_$(VERSION)_linux_x86_64.tar.gz release/$(APP)_$(VERSION)_windows_x86_32.zip release/$(APP)_$(VERSION)_linux_x86_32.tar.gz release/$(APP)_$(VERSION)_linux_arm64.tar.gz
+zip: release/$(APP)_$(VERSION)_osx_x86_64.tar.gz release/$(APP)_$(VERSION)_windows_x86_64.zip release/$(APP)_$(VERSION)_linux_x86_64.tar.gz release/$(APP)_$(VERSION)_windows_x86_32.zip release/$(APP)_$(VERSION)_linux_x86_32.tar.gz release/$(APP)_$(VERSION)_linux_arm64.tar.gz release/$(APP)_$(VERSION)_osx_arm64.tar.gz
 
-binaries: binaries/osx_x86_64/$(APP) binaries/windows_x86_64/$(APP).exe binaries/linux_x86_64/$(APP) binaries/windows_x86_32/$(APP).exe binaries/linux_x86_32/$(APP)
+binaries: binaries/osx_arm64/$(APP) binaries/osx_x86_64/$(APP) binaries/windows_x86_64/$(APP).exe binaries/linux_x86_64/$(APP) binaries/windows_x86_32/$(APP).exe binaries/linux_x86_32/$(APP)
 
 release/$(APP)_$(VERSION)_osx_x86_64.tar.gz: binaries/osx_x86_64/$(APP)
 	mkdir -p release
@@ -75,3 +75,10 @@ release/$(APP)_$(VERSION)_linux_arm64.tar.gz: binaries/linux_arm64/$(APP)
 
 binaries/linux_arm64/$(APP): $(GOFILES)
 	GOOS=linux GOARCH=arm64 CGO_ENABLED=0 go build -ldflags "-X main.version=$(VERSION)" -o binaries/linux_arm64/$(APP) .
+
+release/$(APP)_$(VERSION)_osx_arm64.tar.gz: binaries/osx_arm64/$(APP)
+	mkdir -p release
+	tar cfz release/$(APP)_$(VERSION)_osx_arm64.tar.gz -C binaries/osx_arm64 $(APP)
+
+binaries/osx_arm64/$(APP): $(GOFILES)
+	GOOS=darwin GOARCH=arm64 CGO_ENABLED=0 go build -ldflags "-X main.version=$(VERSION)" -o binaries/osx_arm64/$(APP) .
