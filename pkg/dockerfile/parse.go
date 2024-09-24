@@ -23,7 +23,7 @@ func ParseReader(r io.Reader) (*Dockerfile, error) {
 	if err != nil {
 		return nil, fmt.Errorf("dockerfile/parser.Parse %v", err)
 	}
-	stages, metaArgs, err := instructions.Parse(result.AST)
+	stages, metaArgs, err := instructions.Parse(result.AST, nil)
 	if err != nil {
 		return nil, fmt.Errorf("dockerfile/instructions.Parse %v", err)
 	}
