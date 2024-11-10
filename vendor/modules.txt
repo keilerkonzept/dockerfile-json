@@ -10,8 +10,8 @@ github.com/docker/go-units
 # github.com/gogo/protobuf v1.3.2
 ## explicit; go 1.15
 github.com/gogo/protobuf/proto
-# github.com/moby/buildkit v0.16.0
-## explicit; go 1.21.0
+# github.com/moby/buildkit v0.17.1
+## explicit; go 1.22.0
 github.com/moby/buildkit/frontend/dockerfile/command
 github.com/moby/buildkit/frontend/dockerfile/instructions
 github.com/moby/buildkit/frontend/dockerfile/linter
@@ -32,14 +32,17 @@ github.com/opencontainers/image-spec/specs-go/v1
 # github.com/pkg/errors v0.9.1
 ## explicit
 github.com/pkg/errors
+# github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10
+## explicit; go 1.20
+github.com/planetscale/vtprotobuf/protohelpers
 # github.com/tonistiigi/go-csvvalue v0.0.0-20240710180619-ddb21b71c0b4
 ## explicit; go 1.16
 github.com/tonistiigi/go-csvvalue
 # github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0
 ## explicit
 github.com/yalp/jsonpath
-# google.golang.org/protobuf v1.33.0
-## explicit; go 1.17
+# google.golang.org/protobuf v1.35.1
+## explicit; go 1.21
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
 google.golang.org/protobuf/internal/descfmt
