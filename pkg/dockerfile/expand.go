@@ -39,21 +39,24 @@ func (d *Dockerfile) metaArgsEnvExpander(env instructions.SingleWordExpander) in
 		if defaultValue := arg.DefaultValue; defaultValue != nil {
 			metaArgsEnv[arg.Key] = *defaultValue
 		}
+
 		if value, err := env(arg.Key); err == nil {
 			arg.ProvidedValue = &value
 			metaArgsEnv[arg.Key] = value
 			arg.Value = &value
 		}
-		err := arg.Expand(env)
-		if err != nil {
-			continue
-		}
-		for _, kv := range arg.ArgCommand.Args {
-			if kv.Value != nil {
-				metaArgsEnv[arg.Key] = *kv.Value
+
+		exp := os.Expand(*arg.Value, func(argval string) string {
+			if val, ok := metaArgsEnv[argval]; ok {
+				return val;
 			}
-		}
+
+			return argval;
+		})
+		arg.Value = &exp;
+		metaArgsEnv[arg.Key] = exp;
 	}
+
 	return func(key string) (string, error) {
 		if value, ok := metaArgsEnv[key]; ok {
 			return value, nil

@@ -274,7 +274,8 @@ $ dockerfile-json --jsonpath=..As Dockerfile
 
 `Dockerfile`
 ```Dockerfile
-ARG ALPINE_TAG=3.10
+ARG ALPINE_MINOR=10
+ARG ALPINE_TAG=3.${ALPINE_MINOR}
 ARG APP_BASE=scratch
 
 FROM alpine:$ALPINE_TAG AS build
