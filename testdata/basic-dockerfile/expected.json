@@ -1,0 +1,53 @@
+{
+  "MetaArgs": null,
+  "Stages": [
+    {
+      "Name": "",
+      "OrigCmd": "FROM",
+      "BaseName": "alpine:3.19",
+      "Platform": "",
+      "Comment": "",
+      "SourceCode": "FROM alpine:3.19",
+      "Location": [
+        {
+          "Start": {
+            "Line": 1,
+            "Character": 0
+          },
+          "End": {
+            "Line": 1,
+            "Character": 0
+          }
+        }
+      ],
+      "From": {
+        "Image": "alpine:3.19"
+      },
+      "Commands": [
+        {
+          "CmdLine": [
+            "echo \"hello world\""
+          ],
+          "Files": null,
+          "FlagsUsed": [],
+          "Mounts": [],
+          "Name": "RUN",
+          "NetworkMode": "default",
+          "PrependShell": true,
+          "Security": "sandbox"
+        },
+        {
+          "CmdLine": [
+            "/bin/sh"
+          ],
+          "Files": null,
+          "Mounts": null,
+          "Name": "CMD",
+          "NetworkMode": "",
+          "PrependShell": false,
+          "Security": ""
+        }
+      ]
+    }
+  ]
+}

@@ -345,3 +345,54 @@ $ dockerfile-json --expand-build-args=false --jsonpath=..BaseName Dockerfile
 "build"
 "${APP_BASE}"
 ```
+
+## Testing
+
+### Running tests
+
+```bash
+go test -tags=dfrunsecurity -v ./...
+```
+
+### Adding integration tests
+
+Each directory in `testdata/*` is the main directory of a test scenario.
+Each scenario can have sub-scenarios (subdirectories), but they all share one Containerfile.
+
+```text
+testdata/
+  my-scenario/
+    Containerfile          # required, shared by sub-scenarios
+    expected.json          # required but can be auto-generated
+    args.txt               # optional args for main scenario
+    sub-scenario-1/
+      expected.json
+      args.txt             # args for sub-scenario
+    sub-scenario-2/
+      expected.json
+      args.txt
+```
+
+Generate expected outputs:
+
+```bash
+# Generate for all test cases
+UPDATE_TESTDATA=1 go test -tags=dfrunsecurity
+
+# Or generate for specific test case
+UPDATE_TESTDATA=1 go test -tags=dfrunsecurity -run=TestIntegration/my-scenario/variant-1
+```
+
+In this mode (`UPDATE_TESTDATA=1`), tests overwrite the `expected.json` files instead
+of comparing them with the actual output. To compare against the existing data, run
+the tests without the `UPDATE_TESTDATA` variable.
+
+### Updating test expectations
+
+The update mode is also useful when making changes to existing behavior. Re-generate
+the output files and verify that your changes achieved what you intended:
+
+```bash
+UPDATE_TESTDATA=1 go test -tags=dfrunsecurity
+git diff testdata/  # Review changes
+```
